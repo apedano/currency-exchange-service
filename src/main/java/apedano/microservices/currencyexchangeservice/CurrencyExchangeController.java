@@ -5,7 +5,7 @@
  */
 package apedano.microservices.currencyexchangeservice;
 
-import java.math.BigDecimal;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,12 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CurrencyExchangeController {
     
+    @Autowired
+    private ExchangeValueRepository exchangeValueRepository;
+    
     @Value("${server.port}")
     int port;
     
     @GetMapping("/currency-exchange/from/{from}/to/{to}")
     public ExchangeValue retrieveExchangeValue(@PathVariable String from, @PathVariable String to){
-        ExchangeValue exchangeValue = new ExchangeValue(10000l, from, to, BigDecimal.valueOf(11));
+        ExchangeValue exchangeValue = exchangeValueRepository.findByFromAndTo(from, to);
         exchangeValue.setPort(port);
         return exchangeValue;
     }

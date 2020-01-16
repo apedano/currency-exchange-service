@@ -6,27 +6,38 @@
 package apedano.microservices.currencyexchangeservice;
 
 import java.math.BigDecimal;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  *
  * @author Alessandro
  */
+@Entity
 public class ExchangeValue {
     
+    @Id
+    @GeneratedValue
     private Long id;
-    private String from;
+    
+    @Column(name = "currency_from")
+    private String from; //that is a sql reserved word
+    
+    @Column(name = "currency_to")
     private String to;
-    private BigDecimal convertionMultiple;
+    private BigDecimal conversionMultiple;
     private int port;
 
     public ExchangeValue() {
     }    
 
-    public ExchangeValue(Long id, String from, String to, BigDecimal convertionMultiple) {
+    public ExchangeValue(Long id, String from, String to, BigDecimal conversionMultiple) {
         this.id = id;
         this.from = from;
         this.to = to;
-        this.convertionMultiple = convertionMultiple;
+        this.conversionMultiple = conversionMultiple;
     }
 
     public Long getId() {
@@ -41,10 +52,10 @@ public class ExchangeValue {
         return to;
     }
 
-    public BigDecimal getConvertionMultiple() {
-        return convertionMultiple;
+    public BigDecimal getConversionMultiple() {
+        return conversionMultiple;
     }
-
+    
     public int getPort() {
         return port;
     }
